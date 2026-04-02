@@ -1,7 +1,7 @@
 import React from "react";
-import { LANGUAGE_VERSIONS } from "../constants";
+import { LANGUAGE_IDS } from "../constants";
 
-const languages = Object.entries(LANGUAGE_VERSIONS);
+const languages = Object.keys(LANGUAGE_IDS);
 
 const LanguageSelector = ({ language, onLanguageChange }) => {
   return (
@@ -13,15 +13,16 @@ const LanguageSelector = ({ language, onLanguageChange }) => {
         >
           Select a Language:
         </label>
+
         <select
           value={language}
           id="languages"
           onChange={(e) => onLanguageChange(e.target.value)}
           className="block w-full p-2 bg-gray-800 text-gray-100 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
         >
-          {languages.map(([language, version]) => (
+          {languages.map((language) => (
             <option key={language} value={language} className="bg-gray-900">
-              {language} ({version})
+              {language}
             </option>
           ))}
         </select>

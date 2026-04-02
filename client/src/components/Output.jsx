@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import { executeCode } from "../api";
 import { toast } from "react-toastify";
+import { LANGUAGE_IDS } from "../constants";
 
 const Output = ({ editorRef, language }) => {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const languageId = LANGUAGE_IDS[language];
 
   const runCode = async () => {
     const sourceCode = editorRef.current.getValue();
     if (!sourceCode) return;
     try {
       setIsLoading(true);
-      const { run: result } = await executeCode(sourceCode, language);
+      const result = await executeCode(sourceCode, languageId);
       if (result.stderr) {
-        setOutput("Error!!\n\n" + result.output);
+        setOutput("Error!!\n\n" + result.stderr);
       } else {
-        setOutput(result.output);
+        setOutput(result.stdout);
       }
     } catch (error) {
       console.log(error);

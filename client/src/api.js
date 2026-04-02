@@ -1,19 +1,15 @@
 import axios from "axios";
-import { LANGUAGE_VERSIONS } from "./constants";
+import { LANGUAGE_IDS } from "./constants";
 
 const API = axios.create({
-  baseURL: "https://emkc.org/api/v2/piston",
+  baseURL: "https://ce.judge0.com",
 });
 
-export const executeCode = async (sourceCode, language) => {
-  const res = await API.post("/execute", {
-    language: language,
-    version: LANGUAGE_VERSIONS[language],
-    files: [
-      {
-        content: sourceCode,
-      },
-    ],
+export const executeCode = async (sourceCode, languageId) => {
+  const res = await API.post("/submissions?wait=true", {
+    source_code: sourceCode,
+    language_id: languageId
   });
+
   return res.data;
 };
